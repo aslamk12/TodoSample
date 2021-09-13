@@ -33,4 +33,26 @@ class TodoController extends Controller
          return redirect(route('home'));
 
     }
+    public function edit(Todo $todo){
+
+        // $todo=Todo::findorFail($id);
+        // if(!$todo) return abort(404);
+        // return view('update',['todo'=>$todo]);
+        return view('update',compact('todo'));
+
+    }
+    public function update(Request $request, Todo $todo){
+        $validateData = $request->validate([
+            'title'=>['required','max:124']
+        ]);
+        // $todo->title=$validateData['title'];
+        // $todo->save();
+        $todo->update($validateData);
+        return redirect(route('home'));
+
+    }
+    public function delete(Todo $todo){
+        $todo->delete();
+        return back();
+    }
 }
